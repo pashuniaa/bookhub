@@ -1,0 +1,276 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.img-responsive {
+    width: 200px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+nav a:hover {
+    color: #fff;
+}
+
+.nav-item {
+    font-size: 20px;
+}
+
+.nav-item:hover {
+    background-color: #ff9900;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background-color: #ff9900;
+    color: #fff;
+}
+
+.navbar {
+    color: #fff;
+    background: #1b1b1b;
+}
+
+.navbar-toggler-icon {
+    color: #ff9900;
+}
+
+.bi .bi-caret-down-fill {
+    color: #fff;
+}
+
+.dropdown {
+    display: none;
+    padding-left: 0px;
+    position: absolute;
+    list-style: none;
+    z-index: 1;
+    transition: 0.3s;
+    background: #212529;
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+.dropdown .element {
+    padding-left: 8px;
+}
+
+.dropdown .element:hover {
+    background-color: #ff9900;
+}
+
+@media only screen and (max-width: 600px) {
+    .dropdown {
+        display: none;
+        margin-left: 0px;
+        padding-left: 0px;
+        position: absolute;
+        list-style: none;
+        z-index: 1;
+        transition: 0.3s;
+    }
+
+    nav ul li:hover > ul {
+        display: block;
+        background-color: #ff9900;
+    }
+
+    .dropdown .element {
+        padding: 0;
+    }
+
+    .content .col {
+        margin-top: 30px;
+    }
+
+    .navbar .input-group {
+        display: none;
+    }
+
+    .path {
+        margin-top: 2vh;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .search-small-screen {
+        display: none;
+    }
+
+    .content {
+        margin-top: 3vh;
+    }
+
+    .path {
+        margin-top: 11vh;
+    }
+}
+
+/* SEARCH MENU */
+.search {
+    position: relative;
+    margin-top: 70px;
+    padding-top: 8px;
+    padding-bottom: 5px;
+    height: auto;
+    background: #928484;
+}
+
+.search-small-screen {
+    margin-top: 9vh;
+    background: #1b1b1b;
+}
+
+/* CONTENT */
+
+.path {
+    text-align: center;
+    background: #d5d5d5;
+}
+
+.path .h2 {
+    /* KAZKODEL NEKEICIA FONTO */
+    font-weight: bold;
+}
+
+.card {
+    border: none;
+}
+
+.card a {
+    text-decoration: none;
+    color: #1b1b1b;
+}
+
+.card img {
+    width: 210px;
+    height: 320px;
+    margin-bottom: 1vh;
+}
+
+.card:hover {
+    background: #e6e6e6;
+}
+
+.content .container {
+    text-align: center;
+}
+
+.footer {
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
+    height: 10vh;
+    background: #363636;
+    color: #fff;
+    text-align: center;
+}
+
+/* MODAL */
+
+.modal {
+    margin-top: 7.2vh;
+}
+
+/*.modal .col .image {*/
+/*    text-align: center;*/
+/*}*/
+
+/*.modal .cover {*/
+/*    box-shadow: 5px 10px 5px grey;*/
+/*}*/
+
+.modal .name {
+    font-weight: bold;
+    margin-bottom: 1vh;
+}
+
+#book-cover{
+    width: 210px;
+    height: 320px;
+    margin-bottom: 1vh;
+    box-shadow: 5px 10px 5px grey;
+}
+
+.main {
+    border-bottom: 2px solid #ff9900;
+
+    padding: 5px;
+}
+
+.details {
+    margin-top: 10px;
+}
+
+.buttons {
+    margin-top: 5vh;
+}
+
+.buttons .col {
+    text-align: center;
+}
+
+.buttons .btn {
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 480px) {
+    /* TODO ================================================
+
+    Optimize modal box for smaller screens
+    KAIP PADARYT KAD KAI TABLE YRA MAZAS, FOOTERIS LIKTU PSL APACIOJ? BET JEI PER VISA PUSLAPI, TAI IKI FOOTERIO REIKETU SCROLLINT
+    */
+}
+/*BOOKSHELF=====================================================*/
+.table {
+    margin: auto;
+    width: 80%;
+}
+
+/*LOGIN=========================================================*/
+.content .signin{
+    height: 100vh;
+}
+.login{
+    color: white;
+    width: 400px;
+    height: 410px;
+    margin-top: 18vh;
+    border-radius: 15px;
+    background-color: #232323;
+}
+
+.login a{
+    text-decoration: none;
+    color: #717171;
+}
+
+.login .form-signin-heading{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.login button{
+    background-color: #ff9900;
+    color: white;
+}
+
+.login .form-check{
+    margin-left: 20px;
+}
+
+.login p{
+    color: #928484;
+}
