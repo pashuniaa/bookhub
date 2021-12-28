@@ -2,6 +2,8 @@ body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
+    background-image:url(../Images/snowflakes.png);
+    background-repeat:repeat;
 }
 
 .img-responsive {
@@ -146,7 +148,13 @@ nav ul li:hover > ul {
 
 .card {
     border: none;
+    background-color: transparent;
 }
+
+/*.card:hover{*/
+/*    border: 2px solid red;*/
+/*}*/
+
 
 .card a {
     text-decoration: none;
@@ -154,25 +162,34 @@ nav ul li:hover > ul {
 }
 
 .card img {
-    width: 210px;
-    height: 320px;
+    width: 180px;
+    height: 290px;
     margin-bottom: 1vh;
 }
 
-.card:hover {
-    background: #e6e6e6;
+.card:hover{
+    background-color: #e1e1e1;
 }
+
+/*.content{*/
+/*    min-height: 100vh;*/
+/*    padding-bottom: 2.5rem;*/
+/*}*/
 
 .content .container {
     text-align: center;
+    padding-bottom: 3rem;
+}
+
+.content{
+    min-height: 100vh;
 }
 
 .footer {
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*bottom: 0;*/
-    /*width: 100%;*/
-    height: 10vh;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 3rem;
     background: #363636;
     color: #fff;
     text-align: center;
@@ -273,4 +290,13 @@ nav ul li:hover > ul {
 
 .login p{
     color: #928484;
+}
+
+.manageAddUserBtn{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.manage-modal-buttons{
+    text-align: center;
 }

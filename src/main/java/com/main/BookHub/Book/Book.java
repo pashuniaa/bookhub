@@ -16,6 +16,7 @@ public class Book {
     private String publicationDate;
     private String isbn;
     private String imageUrl;
+    private String readUrl;
     @Enumerated(EnumType.STRING)
     private GENRE genre;
     @Enumerated(EnumType.STRING)
@@ -28,12 +29,13 @@ public class Book {
     public Book() {
     }
 
-    public Book(String name, String author, String publicationDate, String isbn, String imageUrl, GENRE genre, LANGUAGE language, Set<User> readers) {
+    public Book(String name, String author, String publicationDate, String isbn, String imageUrl, String readUrl, GENRE genre, LANGUAGE language, Set<User> readers) {
         this.name = name;
         this.author = author;
         this.publicationDate = publicationDate;
         this.isbn = isbn;
         this.imageUrl = imageUrl;
+        this.readUrl = readUrl;
         this.genre = genre;
         this.language = language;
         this.readers = readers;
@@ -85,6 +87,14 @@ public class Book {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getReadUrl() {
+        return readUrl;
+    }
+
+    public void setReadUrl(String readUrl) {
+        this.readUrl = readUrl;
     }
 
     public GENRE getGenre() {

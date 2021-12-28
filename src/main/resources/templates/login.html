@@ -9,16 +9,17 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
   <link th:href="@{/css/bl-styles.css}" rel="stylesheet" type="text/css"/>
+  <link rel="shortcut icon" th:src="@{/Images/tab.png}" />
 </head>
 <body>
 <nav class="navbar navbar-expand-lg py-1 fixed-top">
   <div class="container">
     <a href="#" class="navbar-brand p-2">
       <img
-              class="img-responsive"
-              th:src="@{Images/logo.png}"
               alt="logo"
+              class="img-responsive"
               style="width: 130px"
+              th:src="@{../Images/logo.png}"
       />
     </a>
   </div>
@@ -30,11 +31,9 @@
       <form class="form-signin" method="post" action="/content/login">
         <h2 class="form-signin-heading">Sign In</h2>
         <p>
-          <label for="username" class="sr-only">Username</label>
           <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
         </p>
         <p>
-          <label for="password" class="sr-only">Password</label>
           <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         </p>
 
@@ -43,6 +42,10 @@
       <p><a href="#">Don't have an account? Sign Up</a></p>
     </div>
   </div>
+</section>
+<section class="footer">
+  <div class=""col>© 2021 The BookHub LT.</div>
+  <div class="col">All rights reserved.</div>
 </section>
 </body>
 </html>

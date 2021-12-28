@@ -27,4 +27,9 @@ public class AuthController {
     public String getBookShelf(){
         return "bookshelf";
     }
+
+    @GetMapping("/manageBooks")
+    public String getManageBooks(){
+        return "manageBooks";
+    }
 }
