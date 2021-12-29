@@ -12,6 +12,7 @@ $(document).ready(function(){
         url: 'http://localhost:8010/api/v1/users/current',
         success: function(response){
             currentUser=response;
+            console.log("1. GOT CURRENT USER-> "+currentUser.email);
             setRoleContent(currentUser);
 
             if($("#add-row").length){
@@ -19,6 +20,7 @@ $(document).ready(function(){
             }
 
             if($("#addTableRow").length){
+                console.log("2. CALLING GET BOOK LIST AND GET BOOKSHELF");
                 getBookList();
                 getBookshelf(currentUser);
             }
@@ -50,7 +52,9 @@ function getBookList(){
         url: 'http://localhost:8010/api/v1/books',
         success: function(response){
             bookList=response;
-            addCards(bookList);
+            if($("#add-row").length){
+                addCards(bookList);
+            }
         },
         error: function(){
             console.log("ERROR. CAN'T GET BOOK LIST.");
@@ -76,6 +80,9 @@ function getBookshelf(currentUser){
         url: 'http://localhost:8010/api/v1/users/bookshelf/'+currentUser.id,
         success: function(response){
             bookshelf=response;
+
+            console.log("3. GOT CURRENT USER-> "+currentUser.email + " AND ITS BOOKSHELF OF "+bookshelf.length+" BOOKS.");
+
             fillBookshelf(bookshelf);
         },
         error: function(){
@@ -218,7 +225,7 @@ function getBookCover(bookIsbn){
 //CALLS API TO ADD NEW BOOK TO USERS BOOKSHELF
 function addToBookShelf(btn){
     $.ajax({
-        method: 'PUT',
+        method: 'POST',
         url: 'http://localhost:8010/api/v1/users/'+currentUser.id+'/book/'+btn.id,
         success: function(response){
             alert("Book Added.");
@@ -231,6 +238,7 @@ function addToBookShelf(btn){
 
 //FILLS IN BOOKSHELF TABLE
 function fillBookshelf(bookshelf){
+    console.log("4. FILL BOOKSHELF. GOT A BOOKSHELF OF "+bookshelf.length+" BOOKS.");
     for (let i = 0; i < bookshelf.length+1; i++) {
 
         const row = document.createElement('tr');
@@ -283,7 +291,7 @@ function fillManageBooks(){
                 row.setAttribute("data-bs-toggle", "modal");
                 row.setAttribute("data-bs-target", "#myModal");
                 row.setAttribute("id", response[i].id);
-                row.setAttribute("onClick", "fillModal(this)");
+                row.setAttribute("onClick", "fillUpdateBooksModal(this)");
 
                 const data=`
             <th scope="row">${i+1}</th>
@@ -300,6 +308,111 @@ function fillManageBooks(){
             console.log("ERROR. CAN'T GET BOOK LIST.");
         }
     })
+}
+
+//FILLS IN BOOK MODAL WITH BOOK DETAILS
+function fillUpdateBooksModal(btn){
+    let book=bookList[btn.id-1];
+
+    // //ACTION BUTTON
+    // $('.action').attr('id', book.id);
+    //
+    //BOOK COVER
+    document.getElementById("updateCoverUrl").value=book.imageUrl;
+    //READ LINK
+    document.getElementById("updateReadUrl").value=book.readUrl;
+    //BOOK TITLE
+    document.getElementById("updateTitle").value=book.name;
+    //BOOK AUTHOR
+    document.getElementById("updateAuthor").value=book.author;
+    //PUBLICATION DATE
+    document.getElementById("updatePublicationDate").value=book.publicationDate;
+    //GENRE
+    document.getElementById("updateGenre").value=book.genre;
+    //LANGUAGE
+    document.getElementById("updateLanguage").value=book.language;
+    //ISBN
+    document.getElementById("updateIsbn").value=book.isbn;
+
+    //SAVE BUTTON
+    $('.action').attr('id', book.id);
+    $('.remove').attr('id', book.id);
+
+    let title=document.getElementById("updateTitle").value;
+}
+
+function updateBook(btn){
+
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:8010/api/v1/books',
+        success: function(response){
+            let book=response[btn.id-1];
+            let sendUpdateRequest=false;
+
+            //alert("Book from server Title is: "+book.name);
+
+            //GET ALL VALUES FROM INPUT FIELDS
+            let id=book.id;
+            let imageUrl=document.getElementById("updateCoverUrl").value;
+            let readUrl=document.getElementById("updateReadUrl").value;
+            let title=document.getElementById("updateTitle").value;
+            let author=document.getElementById("updateAuthor").value;
+            let publicationDate=document.getElementById("updatePublicationDate").value;
+            let genre=document.getElementById("updateGenre").value;
+            let language=document.getElementById("updateLanguage").value;
+            let isbn=document.getElementById("updateIsbn").value;
+
+            let bookObject={
+                "id": id,
+                "name": title,
+                "author": author,
+                "publicationDate": publicationDate,
+                "isbn": isbn,
+                "imageUrl": imageUrl,
+                "readUrl": readUrl,
+                "genre": genre,
+                "language": language
+            };
+
+            //alert("UPDATE BOOK INFO: "+title+" "+author+" "+publicationDate+" "+genre+" "+language+" "+isbn);
+
+            if(book.imageUrl!== imageUrl) sendUpdateRequest=true;
+            else if(book.readUrl!==readUrl) sendUpdateRequest=true;
+            else if(book.name!==title) sendUpdateRequest=true;
+            else if(book.author!==author) sendUpdateRequest=true;
+            else if(book.publicationDate!==publicationDate) sendUpdateRequest=true;
+            else if(book.genre!==genre) sendUpdateRequest=true;
+            else if(book.language!==language) sendUpdateRequest=true;
+            else sendUpdateRequest = book.isbn !== isbn;
+
+            if(sendUpdateRequest){
+                alert("CHANGES TO THE BOOK WERE MADE!");
+
+                $.ajax({
+                    type: "PUT",
+                    url: 'http://localhost:8010/api/v1/books',
+                    data: JSON.stringify(bookObject),
+                    contentType: "application/json; charset=utf-8",
+                    success:function(response){
+                        window.location.reload();
+                        alert("BOOK HAS BEEN UPDATED.");
+                    },
+                    error: function(){
+                        console.log("ERROR. COULD NOT SEND UPDATE BOOK REQUEST.");
+                    }
+                })
+            }
+        },
+        error: function(){
+            console.log("ERROR UPDATING BOOK.");
+        }
+    })
+
+}
+
+function removeBook(btn){
+    alert("REMOVE BOOK WITH ID: "+btn.id);
 }
 
 

@@ -51,7 +51,7 @@ public class UserController {
         return userSevice.getBookshelf(user_id);
     }
 
-    @PutMapping("/{user_id}/book/{book_id}")
+    @PostMapping("/{user_id}/book/{book_id}")
     public Book addToBookshelf(@PathVariable Long user_id, @PathVariable Long book_id) throws Exception {
         System.out.println("TRYING TO ADD BOOK TO BOOKSHELF");
         return userSevice.addToBookshelf(user_id, book_id);

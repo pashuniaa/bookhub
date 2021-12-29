@@ -173,6 +173,11 @@
             </div>
             <div class="row">
               <div class="col">
+                <input type="text" id="updateReadUrl" class="form-control my-2" placeholder="Read URL" value="Read URL.." required autofocus>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
                 <input type="text" id="updateTitle" class="form-control my-2" placeholder="Title" value="Title" required autofocus>
               </div>
               <div class="col">
@@ -196,8 +201,8 @@
               </div>
             </div>
             <div class="col pt-5">
-              <a href="#" target="_blank" id="button-save" class="mx-2"><button type="button" class="btn" style="background-color: #1b1b1b; color: #fff;" data-bs-dismiss="modal">Save</button></a>
-              <a href="#"><button type="button" class="action btn btn-outline-danger" data-bs-dismiss="modal" id="0">Remove</i></span></button></a>
+              <a href="#" id="button-save" class="action mx-2" onclick="updateBook(this)"><button type="button" class="btn" style="background-color: #1b1b1b; color: #fff;" data-bs-dismiss="modal">Save</button></a>
+              <a href="#" onclick="removeBook(this)" id="button-remove" class="remove"><button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Remove</i></span></button></a>
             </div>
               </div>
             </div>
