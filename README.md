@@ -45,8 +45,8 @@ After successfully logging in, you will be redirected to the home page.
   
   #Further Improvements
   As mentioned before, registration page will be added soon. Also, right now I use google books api to get book card covers and 
-  read book URL's, but those url's are entered to the fields by hand. So soon instead of specifying every url, you will only need to type in book's ISBN,
-  which will automatically call an API and get those. 
+  read book URL's, but those url's are entered to the fields by hand, just like other info. So soon instead of specifying every field, you will only need to type   in book's ISBN,
+  which will automatically call an API and fill in the fields. 
 
 
 
