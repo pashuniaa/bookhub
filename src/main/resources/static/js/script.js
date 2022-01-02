@@ -1,5 +1,3 @@
-//TODO ADD USERS LIST, ON CLICK OPENS UP MODAL TO UPDATE OR DELETE USER.
-//TODO ADD BOOKS LIST, ON CLICK OPENS UP MODAL TO UPDATE OR DELETE BOOK. + ADD BOOK BUTTON, ON CLICK OPENS UP MODAL FOR ADDING BOOKS
 var bookList;
 var bookshelf;
 var currentUser;
@@ -36,10 +34,6 @@ $(document).ready(function(){
         }
     })
 })
-
-function test(){
-    alert("This is called OUTSIDE OF document ready! + "+currentUser.email);
-}
 
 function saveGlobalBooks(books){
     bookList=books;
@@ -80,9 +74,6 @@ function getBookshelf(currentUser){
         url: 'http://localhost:8010/api/v1/users/bookshelf/'+currentUser.id,
         success: function(response){
             bookshelf=response;
-
-            console.log("3. GOT CURRENT USER-> "+currentUser.email + " AND ITS BOOKSHELF OF "+bookshelf.length+" BOOKS.");
-
             fillBookshelf(bookshelf);
         },
         error: function(){
@@ -91,77 +82,53 @@ function getBookshelf(currentUser){
     })
 }
 
-//CREATES A BOOK CARD FROM BOOK LIST AND ADDS TO HTML ROW
+//CREATES A BOOK CARD FROM BOOK LIST AND ADDS TO HTML TABLE
 function addCards(books){
-
     let colCount = 5;
-    let book_counter=0;
+    let temp=5;
+    let bookNumber = 0;
 
-    for (let i = 0; i < books.length; i++) {
-        // Create a row
+    console.log("ADD CARDS RECEIVED "+ books.length+" BOOKS");
+
+    for (let row = 0; row <= books.length / colCount + 1; row++) {
+        // Create row
         const row = document.createElement('div');
         row.className = "row hidden-md-up";
 
-        if((books.length-book_counter)>5){
-            //Jeigu knygu yra daugiau nei 5, mes prasukam visa cikla 5 kartus
-            for (let col = 0; col < colCount; col++) {
-                //let book=books[book_counter];
+            for (let col = 0; col < temp; col++) {
+
+                //console.log("BOOK NAME: "+books[bookNumber].name +", BOOK_ID: "+books[bookNumber].id);
+                if(books[bookNumber] === undefined) continue;
 
                 // Create a column
                 const html_col = `
-                <div class="card m-1">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#myModal" id="${books[book_counter].id}" onclick="fillModal(this)">
-                        <div class="card-block">
-                            <img src="{${books[book_counter].imageUrl}}">
-                            <h4 class="card-title">${books[book_counter].name}</h4>
-                            <h6 class="card-subtitle text-muted">${books[book_counter].author}</h6>
-                        </div>
-                    </a>
-                </div>
-                `;
+              <div class="card m-1">
+                 <a href="#" data-bs-toggle="modal" data-bs-target="#myModal" id="${books[bookNumber].id}" onclick="fillModal(this)">
+                    <div class="card-block">
+                       <img src="${books[bookNumber].imageUrl}">
+                       <h4 class="card-title">${books[bookNumber].name}</h4>
+                       <h6 class="card-subtitle text-muted">${books[bookNumber].author}</h6>
+                    </div>
+                 </a>
+              </div>
+            `;
 
-                const cellId = book.id;
+                console.log(books[bookNumber].name + " BOOK RECEIVED THIS ID: "+books[bookNumber].id);
+
+                const cellId = books[bookNumber].id;
                 const cell = document.createElement('div');
                 cell.className = "col";
                 cell.innerHTML = html_col;
                 cell.id = cellId;
                 row.appendChild(cell);
-                book_counter++;
+                bookNumber++;
+
+                //if((books.length-bookNumber)<5) colCount=books.length-bookNumber;
             }
-
-            document.getElementById('add-row').appendChild(row);
-        }
-
-        if((books.length-book_counter)<5){
-            //jei knygu yra maziau nei 5, mes turime prasukti cikla tik tiek kartu kiek yra knygu
-            for (let col = 0; col < (books.length-book_counter+1); col++) {
-
-                //let book=books[book_counter];
-
-                // Create a column
-                const html_col = `
-                <div class="card m-2">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#myModal" id="${books[book_counter].id}" onclick="fillModal(this)">
-                        <div class="card-block">
-                            <img src="${books[book_counter].imageUrl}">
-                            <h4 class="card-title">${books[book_counter].name}</h4>
-                            <h6 class="card-subtitle text-muted">${books[book_counter].author}</h6>
-                        </div>
-                    </a>
-                </div>
-                `;
-
-                const cell = document.createElement('div');
-                cell.className = "col";
-                cell.innerHTML = html_col;
-                row.appendChild(cell);
-                book_counter++;
-            }
-
-            document.getElementById('add-row').appendChild(row);
-        }
+            document.getElementById("add-row").appendChild(row);
     }
 }
+
 
 $("#user-modal").click(function() {
     document.getElementById("user-name").innerHTML=currentUser.firstName+ " "+currentUser.lastName;
@@ -170,57 +137,63 @@ $("#user-modal").click(function() {
 
 //FILLS IN BOOK MODAL WITH BOOK DETAILS
 function fillModal(btn){
-    let book=bookList[btn.id-1];
-    //ACTION BUTTON
-    $('.action').attr('id', book.id);
 
-    //BOOK COVER
-    document.getElementById("book-cover").src=book.imageUrl;
-    //BOOK TITLE
-    document.getElementById("book-title").innerHTML=book.name;
-    //BOOK AUTHOR
-    document.getElementById("book-author").innerHTML=book.author;
-    //PUBLICATION DATE
-    document.getElementById("publication-date").innerHTML=book.publicationDate;
-    //GENRE
-    document.getElementById("genre").innerHTML=book.genre;
-    //LANGUAGE
-    document.getElementById("language").innerHTML=book.language;
-    //ISBN
-    document.getElementById("isbn").innerHTML=book.isbn;
-    //ID
-    document.getElementById("id").innerHTML=book.id;
+    let book=bookList[0];
 
-    //READ BUTTON
-    console.log("READ BUTTON URL: "+book.readUrl);
-    document.getElementById("button-read").href=book.readUrl;
+    for(let i=0; i<bookList.length; i++){
+
+        if(bookList[i].id == btn.id){
+            book=bookList[i];
+        }
+    }
+
+        //ACTION BUTTON
+        $('.action').attr('id', book.id);
+        //BOOK COVER
+        document.getElementById("book-cover").src=book.imageUrl;
+        //BOOK TITLE
+        document.getElementById("book-title").innerHTML=book.name;
+        //BOOK AUTHOR
+        document.getElementById("book-author").innerHTML=book.author;
+        //PUBLICATION DATE
+        document.getElementById("publication-date").innerHTML=book.publicationDate;
+        //GENRE
+        document.getElementById("genre").innerHTML=book.genre;
+        //LANGUAGE
+        document.getElementById("language").innerHTML=book.language;
+        //ISBN
+        document.getElementById("isbn").innerHTML=book.isbn;
+        //ID
+        document.getElementById("id").innerHTML=book.id;
+        //READ BUTTON
+        document.getElementById("button-read").href=book.readUrl;
 }
 
 //GOOGLE BOOKS API
-function getBookCover(bookIsbn){
-    let apiUrl = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
-
-    $.ajax({
-        url: apiUrl + bookIsbn,
-        type: "GET",
-        dataType: "json",
-        success: function(response) {
-            console.log(response)
-            if (response.totalItems === 0) {
-                console.log("can not get book cover.. try again")
-            }
-            else {
-                let item = response.items[0];
-                let bookImgUrl=item.volumeInfo.imageLinks.thumbnail;
-
-                return bookImgUrl;
-            }
-        },
-        error: function () {
-            alert("Something went wrong.. <br>"+"Try again!");
-        }
-    });
-}
+// function getBookCover(bookIsbn){
+//     let apiUrl = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
+//
+//     $.ajax({
+//         url: apiUrl + bookIsbn,
+//         type: "GET",
+//         dataType: "json",
+//         success: function(response) {
+//             console.log(response)
+//             if (response.totalItems === 0) {
+//                 console.log("can not get book cover.. try again")
+//             }
+//             else {
+//                 let item = response.items[0];
+//                 let bookImgUrl=item.volumeInfo.imageLinks.thumbnail;
+//
+//                 return bookImgUrl;
+//             }
+//         },
+//         error: function () {
+//             alert("Something went wrong.. <br>"+"Try again!");
+//         }
+//     });
+// }
 
 //CALLS API TO ADD NEW BOOK TO USERS BOOKSHELF
 function addToBookShelf(btn){
@@ -238,7 +211,6 @@ function addToBookShelf(btn){
 
 //FILLS IN BOOKSHELF TABLE
 function fillBookshelf(bookshelf){
-    console.log("4. FILL BOOKSHELF. GOT A BOOKSHELF OF "+bookshelf.length+" BOOKS.");
     for (let i = 0; i < bookshelf.length+1; i++) {
 
         const row = document.createElement('tr');
@@ -261,14 +233,12 @@ function fillBookshelf(bookshelf){
 }
 
 function removeFromBookshelf(btn){
-    console.log("REMOVE FROM BOOKSHELF is being called with ID: "+btn.id);
-
     $.ajax({
         method: 'DELETE',
         url: 'http://localhost:8010/api/v1/users/bookshelf/'+currentUser.id+'/delete/'+btn.id,
         success: function(response){
-            window.location.reload();
             alert("Book Deleted.");
+            window.location.reload();
         },
         error: function(){
             console.log("ERROR. CAN'T DELETE BOOK.");
@@ -277,14 +247,13 @@ function removeFromBookshelf(btn){
 }
 
 //MANAGE BOOKS
-
-//FILLS IN BOOKSHELF TABLE
+//FILLS IN MANAGE BOOKS TABLE
 function fillManageBooks(){
     $.ajax({
         method: 'GET',
         url: 'http://localhost:8010/api/v1/books',
         success: function(response){
-            for (let i = 0; i < response.length+1; i++) {
+            for (let i = 0; i < response.length; i++) {
 
                 const row = document.createElement('tr');
                 row.className = "clickable-ro";
@@ -312,11 +281,14 @@ function fillManageBooks(){
 
 //FILLS IN BOOK MODAL WITH BOOK DETAILS
 function fillUpdateBooksModal(btn){
-    let book=bookList[btn.id-1];
+    let book=bookList[0];
 
-    // //ACTION BUTTON
-    // $('.action').attr('id', book.id);
-    //
+    for(let i=0; i<bookList.length; i++){
+        if(bookList[i].id == btn.id){
+            book=bookList[i];
+        }
+    }
+
     //BOOK COVER
     document.getElementById("updateCoverUrl").value=book.imageUrl;
     //READ LINK
@@ -336,6 +308,7 @@ function fillUpdateBooksModal(btn){
 
     //SAVE BUTTON
     $('.action').attr('id', book.id);
+    //REMOVE BUTTON
     $('.remove').attr('id', book.id);
 
     let title=document.getElementById("updateTitle").value;
@@ -343,14 +316,20 @@ function fillUpdateBooksModal(btn){
 
 function updateBook(btn){
 
+    console.log("UPDATE BOOK WITH ID: "+btn.id);
+
     $.ajax({
         method: 'GET',
         url: 'http://localhost:8010/api/v1/books',
         success: function(response){
-            let book=response[btn.id-1];
-            let sendUpdateRequest=false;
+            let book=response[0];
 
-            //alert("Book from server Title is: "+book.name);
+            for(let i=0; i<response.length; i++){
+                if(response[i].id == btn.id){
+                    book=response[i];
+                }
+            }
+            let sendUpdateRequest=false;
 
             //GET ALL VALUES FROM INPUT FIELDS
             let id=book.id;
@@ -375,8 +354,6 @@ function updateBook(btn){
                 "language": language
             };
 
-            //alert("UPDATE BOOK INFO: "+title+" "+author+" "+publicationDate+" "+genre+" "+language+" "+isbn);
-
             if(book.imageUrl!== imageUrl) sendUpdateRequest=true;
             else if(book.readUrl!==readUrl) sendUpdateRequest=true;
             else if(book.name!==title) sendUpdateRequest=true;
@@ -387,8 +364,6 @@ function updateBook(btn){
             else sendUpdateRequest = book.isbn !== isbn;
 
             if(sendUpdateRequest){
-                alert("CHANGES TO THE BOOK WERE MADE!");
-
                 $.ajax({
                     type: "PUT",
                     url: 'http://localhost:8010/api/v1/books',
@@ -413,6 +388,58 @@ function updateBook(btn){
 
 function removeBook(btn){
     alert("REMOVE BOOK WITH ID: "+btn.id);
+}
+
+function addBook(){
+
+    let sendAddBookRequest=false;
+
+    //GET ALL VALUES FROM INPUT FIELDS
+    let imageUrl=document.getElementById("addCoverUrl").value;
+    let readUrl=document.getElementById("addReadUrl").value;
+    let title=document.getElementById("addTitle").value;
+    let author=document.getElementById("addAuthor").value;
+    let publicationDate=document.getElementById("addPublicationDate").value;
+    let genre=document.getElementById("addGenre").value;
+    let language=document.getElementById("addLanguage").value;
+    let isbn=document.getElementById("addIsbn").value;
+
+    let bookObject={
+        "name": title,
+        "author": author,
+        "publicationDate": publicationDate,
+        "isbn": isbn,
+        "imageUrl": imageUrl,
+        "readUrl": readUrl,
+        "genre": genre,
+        "language": language
+    };
+
+    if(imageUrl!=null) sendAddBookRequest=true;
+    else if(readUrl!=null) sendAddBookRequest=true;
+    else if(title!=null) sendAddBookRequest=true;
+    else if(author!=null) sendAddBookRequest=true;
+    else if(publicationDate!=null) sendAddBookRequest=true;
+    else if(genre!=null) sendAddBookRequest=true;
+    else if(language!=null) sendAddBookRequest=true;
+    else sendAddBookRequest = false;
+
+    if(sendAddBookRequest){
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:8010/api/v1/books',
+            data: JSON.stringify(bookObject),
+            contentType: "application/json; charset=utf-8",
+            success:function(response){
+                window.location.reload();
+                fillManageBooks();
+                alert("BOOK HAS BEEN ADDED.");
+                },
+            error: function(){
+                console.log("ERROR. COULD NOT SEND ADD BOOK REQUEST.");
+            }
+        })
+    }
 }
 
 

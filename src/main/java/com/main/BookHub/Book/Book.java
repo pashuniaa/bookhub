@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String author;
@@ -29,7 +29,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String name, String author, String publicationDate, String isbn, String imageUrl, String readUrl, GENRE genre, LANGUAGE language, Set<User> readers) {
+    public Book(String name, String author, String publicationDate, String isbn, String imageUrl, String readUrl, GENRE genre, LANGUAGE language) {
         this.name = name;
         this.author = author;
         this.publicationDate = publicationDate;
@@ -38,7 +38,6 @@ public class Book {
         this.readUrl = readUrl;
         this.genre = genre;
         this.language = language;
-        this.readers = readers;
     }
 
     public long getId() {

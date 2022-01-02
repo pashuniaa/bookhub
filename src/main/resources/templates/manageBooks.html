@@ -114,7 +114,9 @@
 <!--TODO ADD MODAL TO THIS BUTTON-->
 <section class="manageAddUserBtn">
   <div class="container">
-    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="myModal">Add New Book <span><i class="fas fa-plus"></i></span></button>
+    <a href="#" class="addBook" data-bs-toggle="modal" data-bs-target="#addBookModal">
+      <button class="btn btn-outline-primary">Add New Book <span><i class="fas fa-plus"></i></span></button>
+    </a>
   </div>
 </section>
 
@@ -155,9 +157,6 @@
   </div>
 
   <!-- =============================================UPDATE BOOK MODAL=============================================== -->
-  <div id="add_to_me-MODAL">
-
-  </div>
   <div class="modal" id="myModal">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
@@ -210,6 +209,60 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- =============================================ADD+ BOOK MODAL=============================================== -->
+  <div class="modal" id="addBookModal">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <input type="text" id="addCoverUrl" class="form-control my-2" placeholder="Book Cover URL" required autofocus>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="text" id="addReadUrl" class="form-control my-2" placeholder="Read URL" required autofocus>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="text" id="addTitle" class="form-control my-2" placeholder="Title" required autofocus>
+              </div>
+              <div class="col">
+                <input type="text" id="addAuthor" class="form-control my-2" placeholder="Author" required autofocus>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="text" id="addPublicationDate" class="form-control my-2" placeholder="Publication Date" required autofocus>
+              </div>
+              <div class="col">
+                <input type="text" id="addGenre" class="form-control my-2" placeholder="Genre" required autofocus>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="text" id="addLanguage" class="form-control my-2" placeholder="Language" required autofocus>
+              </div>
+              <div class="col">
+                <input type="text" id="addIsbn" class="form-control my-2" placeholder="ISBN" required autofocus>
+              </div>
+            </div>
+            <div class="col pt-5">
+              <a href="#" id="add-button" class="action mx-2" onclick="addBook()"><button type="button" class="btn" style="background-color: #1b1b1b; color: #fff;" data-bs-dismiss="modal">Add Book</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
   </div>
 </section>
 
