@@ -5,5 +5,6 @@ public enum LANGUAGE {
     Polish,
     Lithuanian,
     Russian,
-    French
+    French,
+    Japanese
 }

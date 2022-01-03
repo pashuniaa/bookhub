@@ -9,5 +9,6 @@ public enum GENRE {
     Science,
     Comics,
     Fantasy,
-    Novel
+    Novel,
+    Manga
 }
